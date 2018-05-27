@@ -42,7 +42,7 @@ export default {
         // 判断接口的code参数是否为 "0"
         if (res.code === ERR_OK) {
           this.singers = this._normalizeSinger(res.data.list)
-          console.log(this.singers)
+          // console.log(this.singers)
         }
       })
     },

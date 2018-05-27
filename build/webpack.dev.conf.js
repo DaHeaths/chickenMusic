@@ -32,5 +32,9 @@ module.exports = merge(baseWebpackConfig, {
       inject: true
     }),
     new FriendlyErrorsPlugin()
-  ]
+  ],
+  // 开发服务器配置
+  devServer: {
+
+  }
 })

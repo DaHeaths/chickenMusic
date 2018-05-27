@@ -1,23 +1,57 @@
+<!-- 歌手详情页 -->
 <template>
-    <transition>  
+    <transition>
         <div class="singer-detail"></div>
     </transition>
 </template>
 <script>
-import {mapGetter} from 'vuex'
+import { mapGetters } from 'vuex'
+import { getSingerDetail } from 'api/singer'
+import { ERR_OK } from 'api/config'
+import { createSong } from 'common/js/song'
 
 export default {
+  data() {
+    return {
+      songs: []
+    }
+  },
     computed: {
-        ...mapGetter([
+        ...mapGetters([
             'singer'
         ])
     },
     created () {
-        console.log(this.singer)
+      this._getDetail()
+    },
+    methods: {
+      _getDetail () {
+        // 如果获取不到singer.id值，则退回歌手页面
+        if (!this.singer.id) {
+          this.$router.push('/singer')
+          return;
+        }
+       getSingerDetail(this.singer.id).then((res) => {
+         if (res.code === ERR_OK) {
+          this.songs = this._normalizeSongs(res.data.list)
+          console.log(this.songs)
+         }
+       })
+      },
+      _normalizeSongs (list) {
+        let ret = []
+        list.forEach((item) => {
+          let {musicData} = item
+          if (musicData.songid && musicData.albummid) {
+
+          }
+        })
+        return ret
+      }
     }
 }
 </script>
-<style lang="stylus" scoped rel="stylesheet/stylus"> 
+<style lang="stylus" scoped rel="stylesheet/stylus">
 @import "~common/stylus/variable"
 
 .singer-detail
